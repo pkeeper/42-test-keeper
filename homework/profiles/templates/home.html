@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+<li><b>Имя:</b> {{ profile.name }}</li>
+<li><b>Фамилия:</b> {{ profile.surname }}</li>
+<li><b>Био:</b> {{ profile.bio }}</li>
+<li><b>Контакты:</b> <ul>
+{% for c in contacts %}
+<li><b>{{ c.type }}:</b> {{ c.uid }}</li>
+{% endfor %}
+</ul></li>
+</ul>
+{% endblock %}

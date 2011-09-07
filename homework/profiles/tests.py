@@ -1,16 +1,27 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+from django.test import TestCase, Client
+from models import Profile, ContactField
 
-Replace this with more appropriate tests for your application.
-"""
-
-from django.test import TestCase
-
-
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+class ProfileTest(TestCase):
+    
+    
+    def test_profile_model(self):
+        self.profile = Profile(pk=1)
+        self.assertEqual(self.profile.name, 'Artem')
+        self.assertEqual(self.profile.surname, 'Melanich')
+        self.assertEqual(self.profile.bio, 'Some bio here')
+        
+    def test_contacts(self):
+        contacts = ContactField.objects.filter(owner=self.profile)
+        self.assertEqual(contacts.count(), 4)
+        self.assertTrue(contacts.get(uid='288877528',
+                                     type='icq'))
+        self.assertTrue(contacts.get(uid='pkeeper@jabber.com.ua',
+                                     type='jabber'))
+        self.assertTrue(contacts.get(uid='pensivekeeper@gmail.com',
+                                     type='jabber'))
+        self.assertTrue(contacts.get(uid='pkeeper.shark@mail.ru',
+                                     type='email'))
+    
+    def test_rendering(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
