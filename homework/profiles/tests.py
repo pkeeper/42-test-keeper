@@ -3,9 +3,10 @@ from models import Profile, ContactField
 
 class ProfileTest(TestCase):
     
+    def setUp(self):
+        self.profile = Profile.objects.get(pk=1)
     
     def test_profile_model(self):
-        self.profile = Profile(pk=1)
         self.assertEqual(self.profile.name, 'Artem')
         self.assertEqual(self.profile.surname, 'Melanich')
         self.assertEqual(self.profile.bio, 'Some bio here')
