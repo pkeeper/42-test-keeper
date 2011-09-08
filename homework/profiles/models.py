@@ -3,13 +3,16 @@ from django.db import models
 class Profile(models.Model):
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
+    birthdate = models.DateField()
     bio  = models.TextField()
     
 class ContactField(models.Model):
     CONTACT_TYPE_CHOICES = (
-                            ('email', 'email'),
-                            ('icq', 'icq'),
-                            ('jabber', 'jabber'),
+                            ('email', 'Email'),
+                            ('icq', 'ICQ'),
+                            ('jabber', 'Jabber'),
+                            ('skype', 'Skype'),
+                            ('other', 'other')
                             )
     owner = models.ForeignKey(Profile)
     type = models.CharField(max_length=20, choices=CONTACT_TYPE_CHOICES)

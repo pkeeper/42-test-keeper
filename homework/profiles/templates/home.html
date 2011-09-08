@@ -1,14 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<ul>
-<li><b>Имя:</b> {{ profile.name }}</li>
-<li><b>Фамилия:</b> {{ profile.surname }}</li>
-<li><b>Био:</b> {{ profile.bio }}</li>
-<li><b>Контакты:</b> <ul>
-{% for c in contacts %}
-<li><b>{{ c.type }}:</b> {{ c.uid }}</li>
-{% endfor %}
-</ul></li>
-</ul>
+<h1>42 Coffee Cups Test Assignment</h1>
+
+<table style="width: 100%; vertical-align: top">
+<tr>
+	<td style="width: 50%; vertical-align:top">
+		<ul style=" list-style-type: none; margin-top: 0px">
+		<li>{{ profile.name }}</li>
+		<li>{{ profile.surname }}</li>
+		<li>{{ profile.birthdate }}</li>
+		<li>{{ profile.bio }}</li>
+		</ul>
+	</td>
+	<td style="width: 50%; vertical-align:top">
+		<ul style=" list-style-type: none; margin-top: 0px">
+			<li>Contacts:</li> 
+		{% for c in contacts %}
+			<li>{{ c.type }}: {{ c.uid }}</li>
+		{% endfor %}
+		</ul>
+	</td>
+</tr>
+</table>
 {% endblock %}

@@ -5,7 +5,8 @@
     "fields": {
       "bio": "Some bio here", 
       "surname": "Melanich", 
-      "name": "Artem"
+      "name": "Artem",
+      "birthdate": "1988-09-15"
     }
   }, 
   {
