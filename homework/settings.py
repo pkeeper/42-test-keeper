@@ -119,8 +119,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     'homework.profiles',
+    'django.contrib.admin',
 )
 
 # A sample logging configuration. The only tangible logging
