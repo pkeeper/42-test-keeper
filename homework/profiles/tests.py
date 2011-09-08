@@ -2,7 +2,6 @@ from django.test import TestCase
 from models import Profile, ContactField
 
 
-
 class ProfileTest(TestCase):
 
     def setUp(self):

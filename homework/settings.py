@@ -1,7 +1,11 @@
 # Django settings for homework project.
 
 import os
+import sys
+
+
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8'))
+sys.path.insert(0, os.path.join(CURRENT_PATH, "profiles"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
