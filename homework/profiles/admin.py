@@ -1,5 +1,5 @@
 from django.contrib import admin
-from profiles.models import Profile, ContactField
+from models import Profile, ContactField
 
 
 class ContactFieldInline(admin.StackedInline):
