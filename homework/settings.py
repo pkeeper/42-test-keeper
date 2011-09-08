@@ -5,7 +5,7 @@ import sys
 
 
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8'))
-sys.path.insert(0, os.path.join(CURRENT_PATH, "profiles"))
+sys.path.insert(0, CURRENT_PATH)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
