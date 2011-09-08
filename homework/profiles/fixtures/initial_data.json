@@ -1,0 +1,47 @@
+[
+  {
+    "pk": 1, 
+    "model": "profiles.profile", 
+    "fields": {
+      "bio": "Some bio here", 
+      "surname": "Melanich", 
+      "name": "Artem"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "type": "email", 
+      "uid": "pkeeper.shark@mail.ru"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "type": "icq", 
+      "uid": "288877528"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "type": "jabber", 
+      "uid": "pkeeper@jabber.com.ua"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "type": "jabber", 
+      "uid": "pensivekeeper@gmail.com"
+    }
+  }
+]

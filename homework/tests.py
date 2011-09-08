@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 class AdminTest(TestCase):
 
-
     def test_default_pass(self):
         admin = User.objects.get(username='admin')
         self.assertIsNotNone(admin)
