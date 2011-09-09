@@ -8,11 +8,11 @@ class Profile(models.Model):
     
 class ContactField(models.Model):
     CONTACT_TYPE_CHOICES = (
-                            ('email', 'Email'),
-                            ('icq', 'ICQ'),
-                            ('jabber', 'Jabber'),
-                            ('skype', 'Skype'),
-                            ('other', 'other')
+                            ('Email', 'Email'),
+                            ('ICQ', 'ICQ'),
+                            ('Jabber', 'Jabber'),
+                            ('Skype', 'Skype'),
+                            ('Other contacts', 'Other contacts')
                             )
     
     owner = models.ForeignKey(Profile)
