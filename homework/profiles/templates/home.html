@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" type="text/css" />
+{% endblock %}
+
 {% block content %}
 <h1>42 Coffee Cups Test Assignment</h1>
 
-<div>
-	<div style="width: 50%; float: left">
+<div id="profile">
+	<div id="profile-data">
 		<p>{{ profile.name }}</p>
 		<p>{{ profile.surname }}</p>
 		<p>{{ profile.birthdate }}</p>
 		<p></p>
-		<p>Bio: <br />
+		<p class="multiline">Bio: <br />
 		{{ profile.bio }}</p>
 	</div>
-	<div style="margin-left: 50%">
+	<div id="contacts">
 			<p>Contacts</p> 
 		{% for c in contacts %}
 			<p>{{ c.contact_type }}: {{ c.uid }}</p>
@@ -26,6 +30,6 @@
 			</p>	
 		{% endif %}
 	</div>
-	<div style="clear: both"></div>
+	<div class="clear"></div>
 </div>
 {% endblock %}
