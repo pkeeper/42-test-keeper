@@ -12,12 +12,15 @@ class RequestLogMeddleware():
                    'HTTP_HOST',
                    'HTTP_REFERER',
                    'HTTP_USER_AGENT',
-                   'REMOTE_ADDR')
+                   'REMOTE_ADDR',
+                   'HTTP_X_REQUESTED_WITH',
+                   )
         
         filtered_headers = {}
         
         for h in headers:
-            filtered_headers[h] = request.META[h]
+            if h in request.META:
+                filtered_headers[h] = request.META[h]
         
         req = RequestEntry(
                            path=request.get_full_path(),
