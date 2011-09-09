@@ -6,18 +6,29 @@ from models import RequestEntry
 
 class RequestsAppTest(TestCase):
     
-    def middleware_test(self):
-        
+    def setUp(self):
         c = Client()
-        response = c.get('/', 
-                         {'name': 'fred', 'age': 7},
+        self.responseA = c.get('/', 
+                         {'name': 'fred', 'age': '7'},
                          HTTP_X_REQUESTED_WITH='TestRequest')
-        self.assertEqual(response.status_code, 200)
-        req = RequestEntry.objects.order_by('-created_at')[0]
+        self.responseB = c.get(reverse('requests_list'))
+    
+    def test_middleware(self):
+        
+        self.assertEqual(self.responseA.status_code, 200)
+        req = RequestEntry.objects.order_by('-created_at')[1]
         self.assertEqual(req.path, '/')
         self.assertEqual(req.method, 'GET')
-        self.assertEqual(req.params, {'name': 'fred', 'age': 7})
-        self.assertIn(req.header, {'HTTP_X_REQUESTED_WITH':'TestRequest'})
+        self.assertItemsEqual(eval(req.params), {'name': 'fred', 'age': '7'})
+        self.assertEqual('TestRequest', eval(req.headers)['HTTP_X_REQUESTED_WITH'])
         
-    def request_view_test(self):
-        c = Client()
+    def test_request_view(self):
+        
+        req = RequestEntry.objects.order_by('-created_at')[:10]
+        self.assertEqual(self.responseB.context['requests'].count(), 2)
+        self.assertEqual(req.count(), 2)
+        
+        self.assertEqual(self.responseB.status_code, 200)
+        self.assertEqual(self.responseB.context['requests'][0].path, reverse('requests_list'))
+        
+        

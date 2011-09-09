@@ -23,7 +23,7 @@ class RequestLogMeddleware():
                 filtered_headers[h] = request.META[h]
         
         req = RequestEntry(
-                           path=request.get_full_path(),
+                           path=request.path,
                            method=request.method,
                            params=request.REQUEST,
                            headers=filtered_headers,
