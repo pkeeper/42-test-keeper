@@ -14,6 +14,8 @@ class ContactField(models.Model):
                             ('skype', 'Skype'),
                             ('other', 'other')
                             )
+    
     owner = models.ForeignKey(Profile)
-    type = models.CharField(max_length=20, choices=CONTACT_TYPE_CHOICES)
+    contact_type = models.CharField(max_length=20, db_column='type',
+                            choices=CONTACT_TYPE_CHOICES)
     uid = models.CharField(max_length=50)
