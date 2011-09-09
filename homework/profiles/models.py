@@ -6,10 +6,10 @@ class Profile(models.Model):
 
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
-#    birthdate = models.DateField(default=datetime.date(
-#                                                       year=1988,
-#                                                       month=9,
-#                                                       day=15))
+    birthdate = models.DateField(default=datetime.date(
+                                                       year=1988,
+                                                       month=9,
+                                                       day=15))
     bio = models.TextField()
 
 
