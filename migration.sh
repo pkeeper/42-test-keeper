@@ -1,5 +1,8 @@
 #!/bin/sh
-#python ./homework/manage.py schemamigration profiles --initial
-#python ./homework/manage.py migrate profiles --fake
-python ./homework/manage.py schemamigration profiles --auto
-python ./homework/manage.py migrate profiles
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+MANAG=/homework/manage.py
+python $DIR$MANAG syncdb --noinput
+python $DIR$MANAG schemamigration profiles --initial
+python $DIR$MANAG migrate profiles --fake
+#python $DIR$MANAG schemamigration profiles --auto
+#python $DIR$MANAG migrate profiles
