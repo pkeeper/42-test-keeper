@@ -1,2 +1,2 @@
 test:
-	python homework/manage.py test profiles
+	python homework/manage.py test profiles requests
