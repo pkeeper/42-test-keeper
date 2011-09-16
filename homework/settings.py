@@ -126,7 +126,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'profiles',
     'south',
-    'migration',
     'django.contrib.admin',
 )
 

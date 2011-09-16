@@ -5,6 +5,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^', include('homework.profiles.urls')),
-    url(r'^', include('homework.migration.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
