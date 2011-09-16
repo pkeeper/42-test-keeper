@@ -14,10 +14,7 @@
 		{{ profile_form.as_p }}
 	</div>
 	<div id="contacts">
-		{{ contatcs_forms.management_form }}
-		{% for c in contatcs_forms %}
-			{{ c.as_p }}
-		{% endfor %}
+		{{ contatcs_forms.as_p }}
 	</div>
 	<div class="clear"></div>
 	<input type="submit" value="Save" /> 
