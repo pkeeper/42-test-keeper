@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.test.client import Client
 
+from django.conf import settings
+
 
 class RequestsAppTest(TestCase):
 
@@ -11,6 +13,5 @@ class RequestsAppTest(TestCase):
     def test_context_processor(self):
 
         self.assertEqual(self.response.status_code, 200)
-        from django.conf import settings
-        self.assertItemsEqual(self.response.context['settings'], settings)
+        self.assertIs(self.response.context['SETTINGS'], settings)
         
