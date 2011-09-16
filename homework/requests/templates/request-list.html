@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+42 Coffee Cups Test Assignment - Last 10 requests
+{% endblock %}
+
 {% block content %}
 	<h1>Last 10 requests:</h1>
 	{% for r in requests %}
@@ -13,4 +17,9 @@
 			</p>
 		</div>
 	{% endfor %}
+{% endblock %}
+
+{% block footer %}
+	<hr />
+	<a href="/">Back to homepage</a>
 {% endblock %}
