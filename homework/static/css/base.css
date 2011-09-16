@@ -17,6 +17,11 @@ p {
 	padding-right: 1em;
 }
 
+.request_field {
+	padding: 20px;
+	border: 2px solid #999;
+}
+
 #profile-data {
 	width: 50%;
 	float: left;
@@ -25,3 +30,4 @@ p {
 #contacts {
 	margin-left: 50%;
 }
+

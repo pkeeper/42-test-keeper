@@ -3,7 +3,9 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>{% block title %}{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}{% endblock %}</title>
+		
 		{% block css %}
+			<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" type="text/css" />
 		{% endblock %}
 		
 		{% block js %}
@@ -21,6 +23,7 @@
 		{% endblock %}
 		
 		{% block footer %}
+			{% include  "footer.html" %}
 		{% endblock %}
 	</div>
 </body>
