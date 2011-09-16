@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'profiles',
     'requests',
+    'utils',
     'django.contrib.admin',
 )
 
