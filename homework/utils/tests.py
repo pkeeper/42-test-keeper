@@ -14,4 +14,3 @@ class RequestsAppTest(TestCase):
 
         self.assertEqual(self.response.status_code, 200)
         self.assertIs(self.response.context['SETTINGS'], settings)
-        

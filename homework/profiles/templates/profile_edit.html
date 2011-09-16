@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+42 Coffee Cups Test Assignment - Profile edit
+{% endblock %}
+
+{% block content %}
+<h1>42 Coffee Cups Test Assignment</h1>
+
+<div id="profile">
+	<form action="{% url edit_profile %}" method="post">
+		{% csrf_token %}
+	<div id="profile-data">
+		{{ profile_form.as_p }}
+	</div>
+	<div id="contacts">
+		{{ contatcs_forms.as_p }}
+	</div>
+	<div class="clear"></div>
+	<input type="submit" value="Save" /> 
+	<a href="{% url show_profile %}">Cancel</a>
+	</form>
+</div>
+{% endblock %}
