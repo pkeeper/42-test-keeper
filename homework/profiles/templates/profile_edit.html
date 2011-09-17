@@ -6,13 +6,16 @@
 
 {% block extrahead %}
  {{ profile_form.media }}
+ <script src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"></script>
+ <script src="{{ STATIC_URL }}js/jquery.form.js"></script>
+ <script src="{{ STATIC_URL }}js/forms.js"></script>
 {% endblock %}
 		
 {% block content %}
 <h1>42 Coffee Cups Test Assignment</h1>
 
 <div id="profile">
-	<form action="{% url edit_profile %}" method="post">
+	<form id="form" action="{% url edit_profile %}" method="post">
 		{% csrf_token %}
 	<div id="profile-data">
 		{{ profile_form.as_p }}
@@ -23,6 +26,7 @@
 	<div class="clear"></div>
 	<input type="submit" value="Save" /> 
 	<a href="{% url show_profile %}">Cancel</a>
+	<div id="foutput"></div>
 	</form>
 </div>
 {% endblock %}
