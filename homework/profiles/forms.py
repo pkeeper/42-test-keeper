@@ -22,6 +22,7 @@ class CustomDateWidget(forms.DateInput):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
+        fields = ('bio', 'birthdate', 'surname', 'name')
         widgets = {
             'birthdate': CustomDateWidget(),
         }
