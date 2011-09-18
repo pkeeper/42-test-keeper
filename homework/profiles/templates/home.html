@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load utils_tags %}
 
 {% block title %}
 42 Coffee Cups Test Assignment - Homepage
@@ -11,6 +12,7 @@
 {% else %}
 	<a id="login-edit" href="{% url login %}">Login</a>
 {% endif %}
+{% edit_link profile %}
 
 <div id="profile">
 	<div id="profile-data">
