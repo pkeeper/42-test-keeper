@@ -60,9 +60,9 @@ class ProfileEditTest(TestCase):
         self.assertContains(self.response, form.as_p(), count=1,
                             status_code=200)
 
-        contact_list = ContactField.objects.filter(owner=self.profile)
+        contact_list = ContactField.objects.filter(owner=self.profile).order_by('-pk')
         ContactsFormSet = modelformset_factory(ContactField, extra=2,
-                                               exclude=('owner',))
+                                               fields=('uid', 'contact_type'))
         contact_forms = ContactsFormSet(queryset=contact_list)
         self.assertContains(self.response, contact_forms.management_form,
                             count=1)
