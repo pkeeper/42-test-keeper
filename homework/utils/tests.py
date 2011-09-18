@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from django.core.management import call_command
 
 
 class RequestsAppTest(TestCase):
@@ -30,3 +31,11 @@ class AdmEditTagTest(TestCase):
                                    (content_type.app_label, content_type.model),
                                    args=(obj.id,)) + '''">(admin)</a>'''
         self.assertEqual(rendered, ret_str)
+
+class ModelscountCommandTest(TestCase):
+    def test_command(self):
+        " Test my custom command."
+
+        args = []
+        opts = {}
+        call_command('modelscount', *args, **opts)
