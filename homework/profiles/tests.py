@@ -2,7 +2,6 @@ import datetime
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.forms.models import modelformset_factory
-from django.contrib.auth import authenticate
 from models import Profile, ContactField
 from forms import ProfileForm
 
@@ -41,7 +40,7 @@ class ProfileTest(TestCase):
 
 
 class ProfileEditTest(TestCase):
-    fixtures = ['admin_data.json',]
+    fixtures = ['admin_data.json', ]
 
     def setUp(self):
         self.profile = Profile.objects.get(pk=1)
@@ -68,3 +67,20 @@ class ProfileEditTest(TestCase):
         self.assertContains(self.response, contact_forms.management_form,
                             count=1)
         self.assertContains(self.response, contact_forms.as_p(), count=1)
+
+
+class DateWidgetTest(TestCase):
+    fixtures = ['admin_data.json', ]
+
+    def test_widget_output(self):
+        out = '''<script>
+            $(function() {
+                $("#id_'''
+        out2 = '''").datepicker({ dateFormat: 'yy-mm-dd'});
+            });
+            </script>'''
+        c = Client()
+        self.assertTrue(c.login(username='admin', password='admin'))
+        response = c.get(reverse('edit_profile'))
+        self.assertContains(response, out)
+        self.assertContains(response, out2)

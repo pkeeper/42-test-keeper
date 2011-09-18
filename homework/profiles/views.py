@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
+from django.http import HttpResponse
 from django.template import RequestContext
+
 from models import Profile, ContactField
 from forms import ProfileForm
 
@@ -34,9 +36,20 @@ def edit_profile(request, template_name="profile_edit.html"):
         postdata = request.POST.copy()
         profile_form = ProfileForm(postdata, instance=profile)
         contact_forms = ContactsFormSet(postdata, queryset=contact_list)
-        if profile_form.is_valid() and contact_forms.is_valid():
-            profile_form.save()
-            contact_forms.save()
+        if request.is_ajax:
+            if profile_form.is_valid() and contact_forms.is_valid():
+                profile_form.save()
+                contact_forms.save()
+                return HttpResponse('Form submited and valid!')
+            else:
+                html = profile_form.errors.as_ul()
+                for f in contact_forms:
+                    html += f.errors.as_ul()
+                return HttpResponse('Form not valid!<br/>Errors:<br/>' + html)
+        else:
+            if profile_form.is_valid() and contact_forms.is_valid():
+                profile_form.save()
+                contact_forms.save()
     else:
         profile_form = ProfileForm(instance=profile)
         contact_forms = ContactsFormSet(queryset=contact_list)
