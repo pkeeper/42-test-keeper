@@ -19,7 +19,7 @@ def process_signal(sender, **kwargs):
     # Do not log unnecessary things)
     if obj.__class__ is SignalLog:
         return
-    if obj._meta.app_label == 'admin':
+    if obj._meta.app_label in ('admin', 'sessions'):
         return
 
     if kwargs['signal'] == signals.post_save:
