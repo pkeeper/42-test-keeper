@@ -19,6 +19,7 @@ class RequestsAppTest(TestCase):
         self.assertIs(self.response.context['SETTINGS'], settings)
 
 class AdmEditTagTest(TestCase):
+    fixtures = ['admin_data.json', ]
 
     def test_tag_render(self):
         obj = User.objects.get(pk=1)
