@@ -2,14 +2,22 @@ from django.db import models
 
 
 class Profile(models.Model):
-
+    '''
+    User profile model
+    '''
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     birthdate = models.DateField()
     bio = models.TextField()
 
+    def __unicode__(self):
+        return self.surname + ' ' + self.name
+
 
 class ContactField(models.Model):
+    '''
+    Contact-field model
+    '''
     CONTACT_TYPE_CHOICES = (
                             ('Email', 'Email'),
                             ('ICQ', 'ICQ'),
@@ -21,3 +29,6 @@ class ContactField(models.Model):
     contact_type = models.CharField(max_length=20, db_column='type',
                             choices=CONTACT_TYPE_CHOICES)
     uid = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.contact_type + ': ' + self.uid

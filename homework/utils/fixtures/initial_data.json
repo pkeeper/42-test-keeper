@@ -1,0 +1,57 @@
+[
+  {
+    "pk": 1, 
+    "model": "profiles.profile", 
+    "fields": {
+      "bio": "Multiline", 
+      "surname": "Melanich", 
+      "name": "Artem",
+      "birthdate": "1988-09-15"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "contact_type": "Email", 
+      "uid": "pkeeper.shark@mail.ru"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "contact_type": "ICQ", 
+      "uid": "288877528"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "contact_type": "Jabber", 
+      "uid": "pkeeper@jabber.com.ua"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "contact_type": "Jabber", 
+      "uid": "pensivekeeper@gmail.com"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "profiles.contactfield", 
+    "fields": {
+      "owner": 1, 
+      "contact_type": "Other contacts", 
+      "uid": "Multiline"
+    }
+  }
+]

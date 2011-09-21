@@ -111,6 +111,11 @@ MIDDLEWARE_CLASSES = (
     'requests.middleware.RequestLogMeddleware',
 )
 
+# List of headers to log for requests.middleware.RequestLogMeddleware
+# HTTP_X_REQUESTED_WITH is required for tests
+#WANTED_HEADERS = ('HTTP_X_REQUESTED_WITH',
+#                  )
+
 ROOT_URLCONF = 'homework.urls'
 
 TEMPLATE_DIRS = (

@@ -30,7 +30,8 @@ def edit_profile(request, template_name="profile_edit.html"):
     profile = get_object_or_404(Profile, pk=1)
     contact_list = ContactField.objects.filter(owner=profile).order_by('-pk')
     ContactsFormSet = modelformset_factory(ContactField,
-                                           extra=2, fields=('uid', 'contact_type'))
+                                           can_delete=True, extra=2,
+                                           fields=('uid', 'contact_type'))
 
     if request.method == 'POST':
         postdata = request.POST.copy()
