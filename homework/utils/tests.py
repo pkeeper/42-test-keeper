@@ -36,9 +36,11 @@ class AdmEditTagTest(TestCase):
         self.assertEqual(rendered, link)
 
 
+
 class ModelscountCommandTest(TestCase):
+
     def test_command(self):
-        " Test my custom command."
+        """ Test my custom command."""
 
         args = []
         opts = {}
