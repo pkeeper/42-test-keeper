@@ -4,11 +4,14 @@ from models import Profile
 
 
 class CustomDateWidget(forms.DateInput):
+    """
+        Widget that adds calendar to DateField
+        Requires jQuery
+    """
     class Media:
         css = {
             'all': ('css/ui-lightness/jquery-ui-1.8.16.custom.css',)}
-        js = ('js/jquery-1.6.2.min.js',
-              'js/jquery-ui-1.8.16.custom.min.js')
+        js = ('js/jquery-ui-1.8.16.custom.min.js',)
 
     def render(self, name, value, attrs=None):
         rendered = super(CustomDateWidget, self).render(name, value, attrs)
@@ -20,6 +23,9 @@ class CustomDateWidget(forms.DateInput):
 
 
 class ProfileForm(forms.ModelForm):
+    """
+        Form for Profile model
+    """
     class Meta:
         model = Profile
         widgets = {
