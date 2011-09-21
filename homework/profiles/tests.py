@@ -52,6 +52,7 @@ class ProfileShowTest(TestCase):
             self.assertContains(self.response, c_rendered_html, 1)
         self.assertContains(self.response, self.other_cont.uid)
 
+
 class ProfileEditTest(TestCase):
     fixtures = ['admin_data.json', ]
 
@@ -73,7 +74,8 @@ class ProfileEditTest(TestCase):
         self.assertContains(self.response, form.as_p(), count=1,
                             status_code=200)
 
-        contact_list = ContactField.objects.filter(owner=self.profile).order_by('-pk')
+        contact_list = ContactField.objects.filter(owner=self.profile)\
+                                                   .order_by('-pk')
         ContactsFormSet = modelformset_factory(ContactField, extra=2,
                                                can_delete=True,
                                                fields=('uid', 'contact_type'))

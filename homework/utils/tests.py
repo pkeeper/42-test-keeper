@@ -36,7 +36,6 @@ class AdmEditTagTest(TestCase):
         self.assertEqual(rendered, link)
 
 
-
 class ModelscountCommandTest(TestCase):
 
     def test_command(self):
