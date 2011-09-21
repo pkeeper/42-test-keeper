@@ -62,6 +62,7 @@ class ProfileEditTest(TestCase):
 
         contact_list = ContactField.objects.filter(owner=self.profile)
         ContactsFormSet = modelformset_factory(ContactField, extra=2,
+                                               can_delete=True,
                                                exclude=('owner',))
         contact_forms = ContactsFormSet(queryset=contact_list)
         self.assertContains(self.response, contact_forms.management_form,
