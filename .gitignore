@@ -1,0 +1,8 @@
+*.class
+*.pyc
+*.pyo
+*~
+.*project
+.settings/
+homework/static/.htaccess
+homework/sqlite.db
