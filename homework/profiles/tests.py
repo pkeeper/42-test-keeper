@@ -6,7 +6,7 @@ from models import Profile, ContactField
 from forms import ProfileForm
 
 
-class ProfileTest(TestCase):
+class ProfileShowTest(TestCase):
 
     def setUp(self):
         self.profile = Profile.objects.get(pk=1)
