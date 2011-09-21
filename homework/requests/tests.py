@@ -7,16 +7,14 @@ from models import RequestEntry
 class RequestsAppTest(TestCase):
 
     def setUp(self):
-        c = Client()
-        self.responseA = c.get('/',
-                         {'name': 'fred', 'age': '7'},
-                         HTTP_X_REQUESTED_WITH='TestRequest')
-        self.responseB = c.get(reverse('requests_list'))
+        self.c = Client()
 
     def test_middleware(self):
-
-        self.assertEqual(self.responseA.status_code, 200)
-        req = RequestEntry.objects.order_by('-created_at')[1]
+        response = self.c.get('/',
+                         {'name': 'fred', 'age': '7'},
+                         HTTP_X_REQUESTED_WITH='TestRequest')
+        self.assertEqual(response.status_code, 200)
+        req = RequestEntry.objects.order_by('-created_at')[0]
         self.assertEqual(req.path, '/')
         self.assertEqual(req.method, 'GET')
         self.assertItemsEqual(eval(req.params), {'name': 'fred', 'age': '7'})
@@ -24,11 +22,16 @@ class RequestsAppTest(TestCase):
                          eval(req.headers)['HTTP_X_REQUESTED_WITH'])
 
     def test_request_view(self):
-
+        # Make 12 test requests
+        for i in range(1, 12):
+            response = self.c.get(reverse('requests_list'))
+        # Get last requests and check them
         req = RequestEntry.objects.order_by('-created_at')[:10]
-        self.assertEqual(self.responseB.context['requests'].count(), 2)
-        self.assertEqual(req.count(), 2)
-
-        self.assertEqual(self.responseB.status_code, 200)
-        self.assertEqual(self.responseB.context['requests'][0].path,
-                         reverse('requests_list'))
+        for r in req:
+            self.assertContains(response, '<p>Request path: ' + r.path +
+                                '</p>', count=10, status_code=200)
+            self.assertContains(response, '<p>Request parameters: ' +
+                                r.params + '</p>', count=10)
+            self.assertContains(response,
+                                '{&#39;REMOTE_ADDR&#39;: &#39;127.0.0.1&#39;}',
+                                count=10)
