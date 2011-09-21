@@ -75,6 +75,7 @@ class ProfileEditTest(TestCase):
 
         contact_list = ContactField.objects.filter(owner=self.profile).order_by('-pk')
         ContactsFormSet = modelformset_factory(ContactField, extra=2,
+                                               can_delete=True,
                                                fields=('uid', 'contact_type'))
         contact_forms = ContactsFormSet(queryset=contact_list)
         self.assertContains(self.response, contact_forms.management_form,
