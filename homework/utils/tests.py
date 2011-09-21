@@ -19,7 +19,10 @@ class RequestsAppTest(TestCase):
         self.assertEqual(self.response.status_code, 200)
         self.assertIs(self.response.context['SETTINGS'], settings)
 
+
 class AdmEditTagTest(TestCase):
+
+    fixtures = ['admin_data.json', ]
 
     def test_tag_render(self):
         obj = User.objects.get(pk=1)
@@ -32,9 +35,11 @@ class AdmEditTagTest(TestCase):
                                    args=(obj.id,)) + '''">(admin)</a>'''
         self.assertEqual(rendered, ret_str)
 
+
 class ModelscountCommandTest(TestCase):
+
     def test_command(self):
-        " Test my custom command."
+        """ Test my custom command."""
 
         args = []
         opts = {}

@@ -8,8 +8,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for ctype in ContentType.objects.all():
             description = '''Application : %s
-            Model : %s 
-            Objects count: %s\n''' % (ctype.app_label, ctype.model, ctype.model_class().objects.count())
+            Model : %s
+            Objects count: %s\n''' % (ctype.app_label, ctype.model,
+                                      ctype.model_class().objects.count())
 
             self.stdout.write(description)
             self.stderr.write('error: ' + description)
