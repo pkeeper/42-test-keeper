@@ -16,27 +16,6 @@ class ProfileTest(TestCase):
 
         self.response = self.client.get(reverse('show_profile'))
 
-    def test_profile_model(self):
-        self.assertEqual(self.profile.name, 'Artem')
-        self.assertEqual(self.profile.surname, 'Melanich')
-        self.assertEqual(self.profile.bio, 'Multiline')
-        self.assertEqual(self.profile.birthdate, datetime.date(
-                                                               year=1988,
-                                                               month=9,
-                                                               day=15))
-
-    def test_contacts(self):
-        self.assertEqual(self.contacts.count(), 4)
-        self.assertTrue(self.contacts.get(uid='288877528',
-                                     contact_type='ICQ'))
-        self.assertTrue(self.contacts.get(uid='pkeeper@jabber.com.ua',
-                                     contact_type='Jabber'))
-        self.assertTrue(self.contacts.get(uid='pensivekeeper@gmail.com',
-                                     contact_type='Jabber'))
-        self.assertTrue(self.contacts.get(uid='pkeeper.shark@mail.ru',
-                                     contact_type='Email'))
-        self.assertTrue(self.other_cont)
-
     def test_profile_rendering(self):
         self.assertEqual(self.response.status_code, 200)
         self.assertContains(self.response, self.profile.name, count=1)
