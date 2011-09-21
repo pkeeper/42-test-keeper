@@ -20,7 +20,7 @@ class SignalLoggerTest(TestCase):
         latest_log = self.log.latest('created_at')
         self.assertEqual(latest_log.action, 'Create')
         self.assertEqual(latest_log.model_app, 'sites')
-        self.assertEqual(latest_log.model, 'Site')
+        self.assertEqual(latest_log.model, 'site')
 
     def test_log_on_edit(self):
         test_obj = Site.objects.get(name='test')
@@ -30,7 +30,7 @@ class SignalLoggerTest(TestCase):
         latest_log = SignalLog.objects.order_by('-created_at')[0]
         self.assertEqual(latest_log.action, 'Change')
         self.assertEqual(latest_log.model_app, 'sites')
-        self.assertEqual(latest_log.model, 'Site')
+        self.assertEqual(latest_log.model, 'site')
 
     def test_log_on_delete(self):
         self.test_obj.delete()
@@ -38,4 +38,4 @@ class SignalLoggerTest(TestCase):
         latest_log = self.log.latest('created_at')
         self.assertEqual(latest_log.action, 'Delete')
         self.assertEqual(latest_log.model_app, 'sites')
-        self.assertEqual(latest_log.model, 'Site')
+        self.assertEqual(latest_log.model, 'site')
