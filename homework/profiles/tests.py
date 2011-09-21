@@ -2,12 +2,11 @@ import datetime
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.forms.models import modelformset_factory
-from django.contrib.auth import authenticate
 from models import Profile, ContactField
 from forms import ProfileForm
 
 
-class ProfileTest(TestCase):
+class ProfileShowTest(TestCase):
 
     def setUp(self):
         self.profile = Profile.objects.get(pk=1)
@@ -41,7 +40,7 @@ class ProfileTest(TestCase):
 
 
 class ProfileEditTest(TestCase):
-    fixtures = ['admin_data.json',]
+    fixtures = ['admin_data.json', ]
 
     def setUp(self):
         self.profile = Profile.objects.get(pk=1)

@@ -27,7 +27,7 @@ def show_profile(request, template_name="home.html"):
 def edit_profile(request, template_name="profile_edit.html"):
     profile = get_object_or_404(Profile, pk=1)
     contact_list = ContactField.objects.filter(owner=profile)
-    ContactsFormSet = modelformset_factory(ContactField,
+    ContactsFormSet = modelformset_factory(ContactField, can_delete=True,
                                            extra=2, exclude=('owner',))
 
     if request.method == 'POST':
