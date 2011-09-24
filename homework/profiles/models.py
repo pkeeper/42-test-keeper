@@ -2,22 +2,22 @@ from django.db import models
 
 
 class Profile(models.Model):
-    '''
-    User profile model
-    '''
+    """
+        User profile model
+    """
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     birthdate = models.DateField()
     bio = models.TextField()
 
     def __unicode__(self):
-        return self.surname + ' ' + self.name
+        return self.name + ' ' + self.surname
 
 
 class ContactField(models.Model):
-    '''
-    Contact-field model
-    '''
+    """
+        User profile contact field model
+    """
     CONTACT_TYPE_CHOICES = (
                             ('Email', 'Email'),
                             ('ICQ', 'ICQ'),
