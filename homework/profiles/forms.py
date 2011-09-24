@@ -18,7 +18,7 @@ class ContactsFormSet(BaseModelFormSet):
         super(ContactsFormSet, self).clean()
         """Checks that uid is valid for given contact type."""
         if any(self.errors):
-            # Don't bother validating the formset unless each form is valid 
+            # Don't bother validating the formset unless each form is valid
             # on its own
             return
         for i in range(0, self.total_form_count()):
