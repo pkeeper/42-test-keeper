@@ -39,7 +39,7 @@ function showRequest(formData, jqForm, options) {
 } 
  
 // post-submit callback 
-function showResponse(responseText, statusText, xhr, $form)  { 
+function showResponse(data, statusText, xhr, $form)  { 
     // for normal html responses, the first argument to the success callback 
     // is the XMLHttpRequest object's responseText property 
  
@@ -50,7 +50,23 @@ function showResponse(responseText, statusText, xhr, $form)  {
     // if the ajaxSubmit method was passed an Options Object with the dataType 
     // property set to 'json' then the first argument to the success callback 
     // is the json data object returned by the server 
-        
+    
+    console.log(data);
+    if (data.status != 'ok') {
+        // validation fail
+        for (field in data.errors) {
+            html = '<span class="error">' 
+            for (i in data.errors[field]) {
+                html += data.errors[field][i] + '<br />';
+            }
+            html += '</span>'
+            $('#id_' + field).after(html);
+        }
+    } else {
+        // Remove all error span's
+        $('span.error').remove();
+    }
+
 	$("input").removeAttr('disabled');
 	$("textarea").removeAttr('disabled');
 } 

@@ -43,3 +43,8 @@ p {
 	top:1em;
 	right:2em;
 }
+
+.error {
+    color: red;
+    font-weight: bold;
+}

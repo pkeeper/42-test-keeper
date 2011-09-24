@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
 from django.http import HttpResponse
 from django.template import RequestContext
+from django.utils import simplejson
 
 from models import Profile, ContactField
 from forms import ProfileForm, ContactsFormSet
@@ -41,12 +42,20 @@ def edit_profile(request, template_name="profile_edit.html"):
                 # Save changes in forms
                 profile_form.save()
                 contact_forms.save()
-                return HttpResponse('Form submited and valid!')
+
+                ret = {'status': 'ok'}
             else:
-                html = profile_form.errors.as_ul()
+                errors = {}
                 for f in contact_forms:
-                    html += f.errors.as_ul()
-                return HttpResponse('Form not valid!<br/>Errors:<br/>' + html)
+                    errors[f] = f.errors.as_ul()
+
+                ret = {
+                    'status': 'fail',
+                    'errors': profile_form.errors,
+                }
+
+            json = simplejson.dumps(ret)
+            return HttpResponse(json, mimetype='application/json')
 
         else:
             if profile_form.is_valid() and contact_forms.is_valid():
@@ -59,6 +68,7 @@ def edit_profile(request, template_name="profile_edit.html"):
     else:
         profile_form = ProfileForm(instance=profile)
         contact_forms = CFormSet(profile=profile)
+
     context_dict = {
                     'profile_form': profile_form,
                     'contatcs_forms': contact_forms,
