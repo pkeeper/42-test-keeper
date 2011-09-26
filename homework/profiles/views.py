@@ -45,10 +45,6 @@ def edit_profile(request, template_name="profile_edit.html"):
 
                 ret = {'status': 'ok'}
             else:
-                errors = {}
-                for f in contact_forms:
-                    errors[f] = f.errors.as_ul()
-
                 ret = {
                     'status': 'fail',
                     'errors': profile_form.errors,

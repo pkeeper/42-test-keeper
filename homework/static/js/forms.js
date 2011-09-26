@@ -52,6 +52,8 @@ function showResponse(data, statusText, xhr, $form)  {
     // is the json data object returned by the server 
     
     console.log(data);
+    // Clear all error span's
+    $('span.error').remove();
     if (data.status != 'ok') {
         // validation fail
         for (field in data.errors) {
@@ -62,10 +64,7 @@ function showResponse(data, statusText, xhr, $form)  {
             html += '</span>'
             $('#id_' + field).after(html);
         }
-    } else {
-        // Remove all error span's
-        $('span.error').remove();
-    }
+    };
 
 	$("input").removeAttr('disabled');
 	$("textarea").removeAttr('disabled');
