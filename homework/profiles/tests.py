@@ -103,6 +103,35 @@ class ProfileEditTest(TestCase):
         self.assertEqual(queryset.get(pk=1).contact_type, 'Jabber')
         self.assertEqual(queryset.get(pk=2).uid, '22222222')
 
+    def test_validation(self):
+        self.c.login(username='admin', password='admin')
+        data = {
+                u'name': [u''], # Empty
+                u'surname': [u''], # Empty
+                u'birthdate': [u'notDate'],
+                u'bio': [u''], # Empty
+                u'form-0-id': [u'1'],
+                u'form-0-contact_type': [u'ICQ'],
+                u'form-0-uid': [u'test@mail.ru'],
+                u'form-1-id': [u'2'],
+                u'form-1-uid': [u'22222222'],
+                u'form-1-contact_type': [u'Jabber'],
+                u'form-2-id': [u'3'],
+                u'form-2-contact_type': [u'Email'],
+                u'form-2-uid': [u'notEmail'],
+                u'form-3-id': [u'4'],
+                u'form-3-contact_type': [u'Other contacts'],
+                u'form-3-uid': [u''], # Empty
+                u'form-TOTAL_FORMS': [u'6'],
+                u'form-INITIAL_FORMS': [u'2'],
+                u'form-MAX_NUM_FORMS': [u''], }
+        response = self.c.post(reverse('edit_profile'), data)
+        self.assertContains(response, '<li>This field is required.</li>',
+                            count=4)
+        self.assertContains(response, '<li>ICQ number is not valid.</li>',
+                            count=1)
+        self.assertContains(response, '<li>Jabber is not valid.</li>', count=1)
+        self.assertContains(response, '<li>Email is not valid.</li>', count=1)
 
 class DateWidgetTest(TestCase):
     fixtures = ['admin_data.json', ]
