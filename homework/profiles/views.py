@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
+from django.core.exceptions import ValidationError
 from django.template import RequestContext
 from models import Profile, ContactField
 from forms import ProfileForm, ContactsFormSet
@@ -34,10 +35,17 @@ def edit_profile(request, template_name="profile_edit.html"):
         postdata = request.POST.copy()
         profile_form = ProfileForm(postdata, instance=profile)
         contact_forms = CFormSet(postdata, profile=profile)
+        # This is for formset validation if profile form is not valid
+        contact_forms.is_valid()
         if profile_form.is_valid() and contact_forms.is_valid():
             # Save changes in forms
             profile_form.save()
-            contact_forms.save()
+            try:
+                # If forms are valid but here goes exception,
+                # than POST is inconsistent, therefore ignore it
+                contact_forms.save()
+            except ValidationError:
+                pass
             # Reload forms to display fresh data
             profile_form = ProfileForm(instance=profile)
             contact_forms = CFormSet(profile=profile)
