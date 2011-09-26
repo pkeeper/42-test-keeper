@@ -91,7 +91,7 @@ class ProfileEditTest(TestCase):
                 u'form-INITIAL_FORMS': [u'5'],
                 u'form-MAX_NUM_FORMS': [u''], }
         self.assertEqual(self.c.post(reverse('edit_profile'),
-                                     data).status_code, 200)
+                                     data).status_code, 302)
         self.profile = Profile.objects.get(pk=1)
         queryset = ContactField.objects.filter(owner=self.profile)\
                                                     .order_by('pk')
