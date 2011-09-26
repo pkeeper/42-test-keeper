@@ -37,7 +37,7 @@ def edit_profile(request, template_name="profile_edit.html"):
         postdata = request.POST.copy()
         profile_form = ProfileForm(postdata, instance=profile)
         contact_forms = CFormSet(postdata, profile=profile)
-        if request.is_ajax:
+        if request.is_ajax():
             # This is for formset validation if profile form is not valid
             contact_forms.is_valid()
             if profile_form.is_valid() and contact_forms.is_valid():
@@ -49,9 +49,10 @@ def edit_profile(request, template_name="profile_edit.html"):
             else:
                 ret = {
                     'status': 'fail',
-                    'errors': profile_form.errors,
+                    'profile_errors': profile_form.errors,
+                    'contacts_errors': contact_forms.errors,
+                    'contacts_nonform_errors': contact_forms.non_form_errors(),
                 }
-
             json = simplejson.dumps(ret)
             return HttpResponse(json, mimetype='application/json')
 
