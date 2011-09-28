@@ -30,10 +30,10 @@ class AdmEditTagTest(TestCase):
         c = template.Context({'obj': obj})
         rendered = t.render(c)
         content_type = ContentType.objects.get_for_model(obj.__class__)
-        ret_str = '''<a href="''' + reverse("admin:%s_%s_change" %
-                                   (content_type.app_label, content_type.model),
-                                   args=(obj.id,)) + '''">(admin)</a>'''
-        self.assertEqual(rendered, ret_str)
+        link = reverse("admin:%s_%s_change" %
+                       (content_type.app_label, content_type.model),
+                       args=(obj.id,))
+        self.assertEqual(rendered, link)
 
 
 class ModelscountCommandTest(TestCase):

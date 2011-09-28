@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
-
+from django.utils import simplejson
+from django.core.urlresolvers import reverse
 from models import Profile, ContactField
-from forms import ProfileForm
+from forms import ProfileForm, ContactsFormSet
 
 
 def show_profile(request, template_name="home.html"):
@@ -28,31 +29,46 @@ def show_profile(request, template_name="home.html"):
 @login_required
 def edit_profile(request, template_name="profile_edit.html"):
     profile = get_object_or_404(Profile, pk=1)
-    contact_list = ContactField.objects.filter(owner=profile).order_by('-pk')
-    ContactsFormSet = modelformset_factory(ContactField,
-                                           extra=2, fields=('uid', 'contact_type'))
+    CFormSet = modelformset_factory(ContactField, can_delete=True,
+                                           formset=ContactsFormSet,
+                                           extra=2,
+                                           fields=('uid', 'contact_type'))
 
     if request.method == 'POST':
         postdata = request.POST.copy()
         profile_form = ProfileForm(postdata, instance=profile)
-        contact_forms = ContactsFormSet(postdata, queryset=contact_list)
-        if request.is_ajax:
+        contact_forms = CFormSet(postdata, profile=profile)
+        if request.is_ajax():
+            # This is for formset validation if profile form is not valid
+            contact_forms.is_valid()
             if profile_form.is_valid() and contact_forms.is_valid():
+                # Save changes in forms
                 profile_form.save()
                 contact_forms.save()
-                return HttpResponse('Form submited and valid!')
+
+                ret = {'status': 'ok'}
             else:
-                html = profile_form.errors.as_ul()
-                for f in contact_forms:
-                    html += f.errors.as_ul()
-                return HttpResponse('Form not valid!<br/>Errors:<br/>' + html)
+                ret = {
+                    'status': 'fail',
+                    'profile_errors': profile_form.errors,
+                    'contacts_errors': contact_forms.errors,
+                    'contacts_nonform_errors': contact_forms.non_form_errors(),
+                }
+            json = simplejson.dumps(ret)
+            return HttpResponse(json, mimetype='application/json')
+
         else:
+            # This is for formset validation if profile form is not valid
+            contact_forms.is_valid()
             if profile_form.is_valid() and contact_forms.is_valid():
+                # Save changes in forms
                 profile_form.save()
                 contact_forms.save()
+                return HttpResponseRedirect(reverse('edit_profile'))
     else:
         profile_form = ProfileForm(instance=profile)
-        contact_forms = ContactsFormSet(queryset=contact_list)
+        contact_forms = CFormSet(profile=profile)
+
     context_dict = {
                     'profile_form': profile_form,
                     'contatcs_forms': contact_forms,

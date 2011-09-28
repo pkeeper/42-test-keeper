@@ -39,7 +39,7 @@ function showRequest(formData, jqForm, options) {
 } 
  
 // post-submit callback 
-function showResponse(responseText, statusText, xhr, $form)  { 
+function showResponse(data, statusText, xhr, $form)  { 
     // for normal html responses, the first argument to the success callback 
     // is the XMLHttpRequest object's responseText property 
  
@@ -50,7 +50,44 @@ function showResponse(responseText, statusText, xhr, $form)  {
     // if the ajaxSubmit method was passed an Options Object with the dataType 
     // property set to 'json' then the first argument to the success callback 
     // is the json data object returned by the server 
+    
+    console.log(data);
+    // Clear all error span's
+    $('span.error').remove();
+    if (data.status != 'ok') {
+        // validation fail
+        // Show profile errors
+        for (field in data.profile_errors) {
+            html = '<span class="error">' 
+            for (i in data.profile_errors[field]) {
+                html += data.profile_errors[field][i] + '<br />';
+            }
+            html += '</span>'
+            $('#id_' + field).after(html);
+        };
+        // Show contacts errors
+        for (id in data.contacts_errors) {
+        for (field in data.contacts_errors[id]) {
+            html = '<span class="error">' 
+            for (i in data.contacts_errors[id][field]) {
+                html += data.contacts_errors[id][field][i] + '<br />';
+            }
+            html += '</span>'
+            $('#id_form-' + id + '-'+ field).after(html);
+        };
+        	id += 1;
+        };
         
+        // Show status message
+    	$('#foutput').text('Form is not valid! <br/>' + 
+    										data.contacts_nonform_errors)
+    }
+    else {
+    	$('#foutput').text('Form send and valid!')
+    	// need to reload formset after successfull change for form consistency
+    	window.setTimeout(location.reload(), 2000);
+    };
+
 	$("input").removeAttr('disabled');
 	$("textarea").removeAttr('disabled');
 } 
