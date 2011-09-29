@@ -1,3 +1,5 @@
+from StringIO import StringIO
+
 from django.test import TestCase
 from django.test.client import Client
 from django import template
@@ -5,7 +7,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
-from management.commands.modelscount import print_apps
+from django.core.management import call_command
 
 
 class RequestsAppTest(TestCase):
@@ -40,7 +42,10 @@ class ModelscountCommandTest(TestCase):
 
     def test_command(self):
         """ Test my custom command."""
-
-        out, err_out = print_apps()
+        out = StringIO()
+        err_out = StringIO()
+        call_command("modelscount", stdout=out, stderr=err_out)
+        out.seek(0)
+        err_out.seek(0)
         self.assertTrue(out)
         self.assertTrue(err_out)
