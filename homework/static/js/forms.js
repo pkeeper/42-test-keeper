@@ -79,7 +79,7 @@ function showResponse(data, statusText, xhr, $form)  {
         };
         
         // Show status message
-    	$('#foutput').text('Form is not valid! <br/>' + 
+    	$('#foutput').append('Form is not valid! <br/>' + 
     										data.contacts_nonform_errors)
     }
     else {
