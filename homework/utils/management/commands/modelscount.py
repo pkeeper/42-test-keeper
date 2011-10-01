@@ -4,6 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.utils import ConnectionDoesNotExist
 from django.db import DEFAULT_DB_ALIAS
 
+from types import NoneType
 from optparse import make_option
 
 
@@ -48,10 +49,16 @@ class Command(BaseCommand):
         output = ''
         err_output = ''
         for ctype in ctypes:
-            description = '''Application : %s
-            Model : %s
-            Objects count: %s\n''' % (ctype.app_label, ctype.model,
-                                      ctype.model_class().objects.count())
+            model_class = ctype.model_class()
+            try:
+                description = '''Application : %s
+                Model : %s
+                Objects count: %s\n''' % (ctype.app_label, ctype.model,
+                                          model_class.objects.count())
+            except:
+                description = '''You seem to have legacy ContentType record for
+                            deleted model '%s' of application : '%s'\n''' % (
+                                                ctype.model, ctype.app_label)
             output += description
             err_output += 'Error: ' + description
         self.stdout.write(output)
