@@ -4,7 +4,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.utils import ConnectionDoesNotExist
 from django.db import DEFAULT_DB_ALIAS
 
-from types import NoneType
 from optparse import make_option
 
 
