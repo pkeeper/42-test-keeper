@@ -1,3 +1,5 @@
+from StringIO import StringIO
+
 from django.test import TestCase
 from django.test.client import Client
 from django import template
@@ -5,7 +7,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
-from management.commands.modelscount import print_apps
+from django.core.management import call_command
 
 
 class RequestsAppTest(TestCase):
@@ -38,9 +40,41 @@ class AdmEditTagTest(TestCase):
 
 class ModelscountCommandTest(TestCase):
 
-    def test_command(self):
-        """ Test my custom command."""
+    def setUp(self):
+        self.out = StringIO()
+        self.err_out = StringIO()
 
-        out, err_out = print_apps()
-        self.assertTrue(out)
-        self.assertTrue(err_out)
+    def test_command(self):
+        """ Test default output."""
+        call_command("modelscount", stdout=self.out, stderr=self.err_out,
+                     database='default')
+        ctypes = ContentType.objects.all()
+        for c in ctypes:
+            self.assertIn(c.model, self.out.getvalue())
+            self.assertIn(c.model, self.err_out.getvalue())
+
+    def test_command_args(self):
+        """ Test output for app list."""
+        call_command("modelscount", 'auth', 'sites', stdout=self.out,
+                     stderr=self.err_out, database='default')
+        ctypes = ContentType.objects.all()
+        cfilt = ctypes.exclude(app_label='auth').exclude(app_label='sites')
+        for c in cfilt:
+            self.assertNotIn(c.model, self.out.getvalue())
+            self.assertNotIn(c.model, self.err_out.getvalue())
+        cfilt = ctypes.filter(app_label='auth').filter(app_label='sites')
+        for c in cfilt:
+            self.assertIn(c.model, self.out.getvalue())
+            self.assertIn(c.model, self.err_out.getvalue())
+
+    def test_multidb(self):
+        try:
+            call_command("modelscount", stdout=self.out, stderr=self.err_out,
+                         database='wrongdb')
+            error = True
+        except:
+            error = False
+        if error:
+            self.fail("No error msg on wrong db")
+        self.assertIn("Error: The connection wrongdb doesn't exist."
+                      " Wrong database alias?", self.err_out.getvalue())
