@@ -150,7 +150,7 @@ INSTALLED_APPS = (
     'requests',
     'modelslog',
     'utils',
-    'south',
+    #'south',
     'django.contrib.admin',
 )
 
