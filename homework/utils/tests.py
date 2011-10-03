@@ -24,8 +24,6 @@ class RequestsAppTest(TestCase):
 
 class AdmEditTagTest(TestCase):
 
-    fixtures = ['admin_data.json', ]
-
     def test_tag_render(self):
         obj = User.objects.get(pk=1)
         t = template.Template('{% load utils_tags %}{% edit_link obj %}')

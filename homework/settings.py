@@ -50,6 +50,11 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+# Disable South tests because of a bug in South 0.7 
+# that interfered with django tests
+SKIP_SOUTH_TESTS = True
+SOUTH_TESTS_MIGRATE = False
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = os.path.join(CURRENT_PATH, 'static')
