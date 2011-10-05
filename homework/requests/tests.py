@@ -24,9 +24,14 @@ class RequestsAppTest(TestCase):
     def test_request_view(self):
         # Make 12 test requests
         for i in range(1, 12):
-            response = self.c.get(reverse('requests_list'))
+            self.c.get(reverse('requests_list'))
+        # Change priority for one LogEntry
+        req = RequestEntry.objects.get(pk=1)
+        req.priority = 10
+        req.save()
         # Get last requests and check them
-        req = RequestEntry.objects.order_by('-created_at')[:10]
+        req = RequestEntry.objects.order_by('-priority', '-created_at')[:10]
+        response = self.c.get(reverse('requests_list'))
         for r in req:
             self.assertContains(response, '<p>Request path: ' + r.path +
                                 '</p>', count=10, status_code=200)
@@ -35,3 +40,13 @@ class RequestsAppTest(TestCase):
             self.assertContains(response,
                                 '{&#39;REMOTE_ADDR&#39;: &#39;127.0.0.1&#39;}',
                                 count=10)
+        self.assertContains(response, '<p>Priotiry: 10</p>', count=1)
+
+    def test_priority_change(self):
+        # Make 12 test requests
+        for i in range(1, 12):
+            self.c.get(reverse('requests_list'))
+        self.c.login(username='admin', password='admin')
+        self.c.post(reverse('requests_list'), {'pk':'2',
+                                               'priority':'9'})
+        self.assertTrue(RequestEntry.objects.get(priority=9))
