@@ -8,6 +8,7 @@
 	<h1>Last 10 requests:</h1>
 	{% for r in requests %}
 		<div class="request_field">
+			<p>Priotiry: {{ r.priority }}</p>
 			<p>Logged at: {{ r.created_at }}</p>
 			<p>Method: {{ r.method }}</p>
 			<p>Request path: {{ r.path }}</p>
