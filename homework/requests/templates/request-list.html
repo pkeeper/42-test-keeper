@@ -8,7 +8,16 @@
 	<h1>Last 10 requests:</h1>
 	{% for r in requests %}
 		<div class="request_field">
-			<p>Priotiry: {{ r.priority }}</p>
+			{% if user.is_authenticated %}
+				<form action="{% url requests_list %}" method="POST">
+				{% csrf_token %}
+					{{ r.form.as_p }}
+					<input type="submit" value="Save" />
+					<input type="hidden" name="pk" value="{{ r.pk }}" />
+				</form>				
+			{% else %}
+				<p>Priotiry: {{ r.priority }}</p>
+			{% endif %}
 			<p>Logged at: {{ r.created_at }}</p>
 			<p>Method: {{ r.method }}</p>
 			<p>Request path: {{ r.path }}</p>
